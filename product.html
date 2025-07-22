@@ -11,8 +11,8 @@
 <body>
     <nav class="bg-green-200 p-3 flex items-center justify-between shadow-2xl sticky top-0 z-10">
         <h1 class=" text-2xl font-cursive pl-5">Greenden</h1>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-            class="w-6 h-6 md:hidden">
+        <svg id="menu" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+            stroke="currentColor" class="w-6 h-6 md:hidden">
             <path stroke-linecap="round" stroke-linejoin="round"
                 d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
         </svg>
@@ -30,17 +30,37 @@
         </ul>
     </nav>
 
+
+    <!--side nav-->
+    <section id="sidenav" class="bg-green-200 fixed z-20 top-0 right-0 "
+        style="width: 50%; height: 100vh;right: -50%; transition: right 0.5s ease-in-out;">
+        <div class="text-right p-5">
+            <p class="inline cursor-pointer" id="navclose">X</p>
+        </div>
+        <ul class="flex flex-col text-gray-600 items-center">
+            <a href="index.html">
+                <li class="p-1 hover:text-gray-900 hover:underline">Home</li>
+            </a>
+            <a href="product.html">
+                <li class="p-1 hover:text-gray-900 hover:underline">Products</li>
+            </a>
+            <a href="contact.html">
+                <li class="p-1 hover:text-gray-900 hover:underline">Contact</li>
+            </a>
+        </ul>
+    </section>
+
     <!--products-->
     <section>
         <h1 class="text-3xl font-bold text-center mt-5">Product</h1>
         <div class="flex justify-center items-center mt-2">
-            <input class="text-center border border-black p-2 rounded-lg w-5/6 text-black" type="text"
+            <input id="search" class="text-center border border-black p-2 rounded-lg w-5/6 text-black" type="text"
                 placeholder="Search by name">
         </div>
     </section>
     <!--images-->
     <section>
-        <div class="grid grid-cols-2 mt-8 gap-2 align-center md:grid-cols-4 mt-8 text-center">
+        <div id="product-container" class="grid grid-cols-2 mt-8 gap-2 align-center md:grid-cols-4 mt-8 text-center">
             <div>
                 <img src="./images/rose.jpeg" alt="roseplant" class="rounded-3xl inline hover:shadow-2xl">
                 <h2>Rose Plant</h2>
@@ -230,6 +250,37 @@
         <!-- #endregion -->
         <p>Copyright &copy; 2023</p>
     </footer>
+
+    <script>
+        var menu = document.getElementById("menu");
+        var side = document.getElementById("sidenav");
+        menu.addEventListener("click", function () {
+            side.style.right = "0";
+        })
+        var close = document.getElementById("navclose");
+        close.addEventListener("click", function () {
+            side.style.right = "-50%";
+        })
+        var productContainer = document.getElementById("product-container");
+        var search = document.getElementById("search");
+        var productlist = productContainer.querySelectorAll("div");
+
+        search.addEventListener("keyup", function () {
+            var enteredValue = event.target.value.toUpperCase();
+
+            for (count = 0; count < productlist.length; count = count + 1) {
+                var productname = productlist[count].querySelector("h2").textContent;
+
+                if (productname.toUpperCase().indexOf(enteredValue) < 0) {
+                    productlist[count].style.display = "none";
+                } else {
+                    productlist[count].style.display = "block";
+                }
+            }
+        });
+
+
+    </script>
 </body>
 
 </html>
